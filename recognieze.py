@@ -1,6 +1,7 @@
 import cv2
 
-if __name__ == '__main__':
+
+def videoCapture():
     window = cv2.namedWindow('webcam')
     capture = cv2.VideoCapture()
     capture.open(0)
@@ -34,3 +35,22 @@ if __name__ == '__main__':
 
     capture.release()
     cv2.destroyAllWindows()
+
+
+def imageRec(imgName):
+    img = cv2.imread(imgName, cv2.IMREAD_COLOR)
+    grayScale = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
+
+    contour, hierarchy = cv2.findContours(grayScale, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+    print(contour)
+
+    cv2.drawContours(img, contour, -1, (0, 255, 0), 3)
+    cv2.imshow('image', img)
+
+    if cv2.waitKey(0) == ord('q'):
+        return
+
+
+if __name__ == '__main__':
+    videoCapture()
+    # imageRec('sig1.png')
